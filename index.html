@@ -5,11 +5,39 @@
 function generate() {
 
   var title = document.getElementById("title").value;
-  alert(title);
   var body = document.getElementById("body").value;
-  alert(body);
   var deeplink = document.getElementById("deeplink").value;
-  alert(deeplink);
+  
+  var result = {
+    "APNSMessage": {
+      "aps": {
+        "alert": {
+          "title": title,
+          "body": body
+        },
+        "sound": "default",
+        "badge": "default"
+      },
+      "data": {
+        "pinpoint": {
+          "deeplink": deeplink
+        }
+      }
+    },
+    "GCMMessage": {
+      "data": {
+        "pinpoint.notification.title": title,
+        "pinpoint.notification.body": body,
+        "pinpoint.deeplink": deeplink
+      },
+      "android": {
+        "priority": "high"
+      }
+    }
+  }
+
+  document.getElementById("result").value = JSON.stringify(result, undefined, 2);
+
 }
 
 </script>
