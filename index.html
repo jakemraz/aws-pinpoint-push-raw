@@ -7,7 +7,7 @@ function generate() {
   var title = document.getElementById("title").value;
   var body = document.getElementById("body").value;
   var deeplink = document.getElementById("deeplink").value;
-  
+
   var apns = {
     "aps": {
       "alert": {
@@ -16,24 +16,30 @@ function generate() {
       },
       "sound": "default",
       "badge": "default"
-    },
-    "data": {
-      "pinpoint": {
-        "deeplink": deeplink
-      }
     }
   };
+  
+  if (deeplink) {
+    apns.data = {};
+    apns.data.pinpoint = {};
+    apns.data.pinpoint.deeplink = deeplink;
+  }
+
 
   var gcm = {
     "data": {
       "pinpoint.notification.title": title,
       "pinpoint.notification.body": body,
-      "pinpoint.deeplink": deeplink
     },
     "android": {
       "priority": "high"
     }
   };
+  
+  if (deeplink) {
+    gcm.data['pinpoint.deeplink'] = deeplink;
+  }
+
 
   var result = {};
   if (document.getElementsByName("apns")[0].checked)
