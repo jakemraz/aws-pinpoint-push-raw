@@ -1,0 +1,34 @@
+<html>
+<head>
+
+<script>
+function generate() {
+
+  var title = document.getElementById("title").value;
+  alert(title);
+  var body = document.getElementById("body").value;
+  alert(body);
+  var deeplink = document.getElementById("deeplink").value;
+  alert(deeplink);
+}
+
+</script>
+
+</head>
+
+<body>
+<label for="title" style="width: 70px; display: inline-block">Title</label>
+<input id="title" style="width: 500px;"/><br/>
+<label for="body" style="width: 70px; display: inline-block">Body</label>
+<textarea id="body" style="width: 500px; height: 50px;"></textarea><br/>
+<label for="deeplink" style="width: 70px; display: inline-block">Deeplink</label>
+<input id="deeplink" style="width: 500px;"/><br/>
+
+<label><input type="checkbox" name="os" value="apns" checked>APNS</label>
+<label><input type="checkbox" name="os" value="gcm" checked>GCM</label>
+<br/>
+<button onclick="generate()">Generate RawData</button>
+<br/>
+<textarea id="result" style="width: 570px;height: 300px;"></textarea>
+</body>
+</html>
