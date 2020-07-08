@@ -8,33 +8,38 @@ function generate() {
   var body = document.getElementById("body").value;
   var deeplink = document.getElementById("deeplink").value;
   
-  var result = {
-    "APNSMessage": {
-      "aps": {
-        "alert": {
-          "title": title,
-          "body": body
-        },
-        "sound": "default",
-        "badge": "default"
+  var apns = {
+    "aps": {
+      "alert": {
+        "title": title,
+        "body": body
       },
-      "data": {
-        "pinpoint": {
-          "deeplink": deeplink
-        }
-      }
+      "sound": "default",
+      "badge": "default"
     },
-    "GCMMessage": {
-      "data": {
-        "pinpoint.notification.title": title,
-        "pinpoint.notification.body": body,
-        "pinpoint.deeplink": deeplink
-      },
-      "android": {
-        "priority": "high"
+    "data": {
+      "pinpoint": {
+        "deeplink": deeplink
       }
     }
-  }
+  };
+
+  var gcm = {
+    "data": {
+      "pinpoint.notification.title": title,
+      "pinpoint.notification.body": body,
+      "pinpoint.deeplink": deeplink
+    },
+    "android": {
+      "priority": "high"
+    }
+  };
+
+  var result = {};
+  if (document.getElementsByName("apns")[0].checked)
+    result.APNSMessage = apns;
+  if (document.getElementsByName("gcm")[0].checked)
+  result.GCMMessage = gcm;
 
   document.getElementById("result").value = JSON.stringify(result, undefined, 2);
 }
@@ -61,14 +66,14 @@ function copy() {
 <textarea id="body" style="width: 500px; height: 50px;"></textarea><br/>
 <label for="deeplink" style="width: 70px; display: inline-block">Deeplink</label>
 <input id="deeplink" style="width: 500px;"/><br/>
-
-<label><input type="checkbox" name="os" value="apns" checked>APNS</label>
-<label><input type="checkbox" name="os" value="gcm" checked>GCM</label>
 <br/>
-<button onclick="generate()">Generate RawData</button>
-<br/>
+<label><input type="checkbox" name="apns" checked>APNS</label>
+<label><input type="checkbox" name="gcm" checked>GCM</label>
+<br/><br/>
+<button onclick="generate()" style="width: 100px;height: 50px;">Generate RawData</button>
+<br/><br/>
 <textarea id="result" style="width: 570px;height: 300px;"></textarea>
 <br/>
-<button onclick="copy()">Copy</button>
+<button onclick="copy()" style="width: 100px;height: 50px;">Copy</button>
 </body>
 </html>
